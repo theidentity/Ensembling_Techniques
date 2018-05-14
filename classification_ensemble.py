@@ -23,8 +23,8 @@ def get_stats(y_pred,y_actual):
 	report = classification_report(y_actual,y_pred)
 	accuracy = accuracy_score(y_actual,y_pred)
 
-	# print cm
-	# print report
+	print cm
+	print report
 	print 'Accuracy :',accuracy
 
 def get_model_stats(models,target):
