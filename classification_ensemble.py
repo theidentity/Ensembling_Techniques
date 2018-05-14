@@ -43,21 +43,37 @@ def ensemble_mean(ensembles):
 def ensemble_majority_voting(ensembles):
 	ensembles = np.array([np.argmax(x,axis=1) for x in ensembles])
 	voting = np.array([np.argmax(np.bincount(ensembles[:,x])) for x in range(ensembles.shape[1])])
-	print voting
 	return voting
 
 
-pred_ensembles = np.load('data/npy/pred_all.npy').astype(np.float64)
-pred_ensembles = prep_ensembles(pred_ensembles)
-target = np.load('data/npy/target.npy')
+
+if __name__ == '__main__':
+	
+	pred_ensembles = np.load('data/npy/pred_all.npy').astype(np.float64)
+	pred_ensembles = prep_ensembles(pred_ensembles)
+	target = np.load('data/npy/target.npy')
 
 
-get_model_stats(pred_ensembles,target)
+	get_model_stats(pred_ensembles,target)
 
-print 'Mean ensembles'
-output = ensemble_mean(pred_ensembles)
-get_stats(output,target)
+	print 'Mean ensembles'
+	output = ensemble_mean(pred_ensembles)
+	get_stats(output,target)
 
-print 'Majority Voting'
-output = ensemble_majority_voting(pred_ensembles)
-get_stats(output,target)
+	print 'Majority Voting'
+	output = ensemble_majority_voting(pred_ensembles)
+	get_stats(output,target)
+
+
+	# RESNET50
+	# Accuracy : 0.969882729211
+	# XCEPTION
+	# Accuracy : 0.945895522388
+	# CAPSNET
+	# Accuracy : 0.653251599147
+	# CNN_CUSTOM
+	# Accuracy : 0.861407249467
+	# Mean ensembles
+	# Accuracy : 0.982675906183
+	# Majority Voting
+	# Accuracy : 0.967750533049
