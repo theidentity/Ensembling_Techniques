@@ -28,7 +28,9 @@ def get_stats(y_pred,y_actual):
 	print 'Accuracy :',accuracy
 
 def get_model_stats(models,target):
-	for model in models:
+	names = ['resnet50','xception','capsnet','cnn_custom']
+	for i,model in enumerate(models):
+		print names[i].upper()
 		y_pred = np.argmax(model,axis=1)
 		y_true = target
 		get_stats(y_pred,y_true)
@@ -44,13 +46,6 @@ def ensemble_majority_voting(ensembles):
 	print voting
 	return voting
 
-def stacking(ensembles,target):
-	print ensembles.shape
-	print target.shape
-
-	inp = np.array([ensembles[:,x,:].flatten() for x in range(ensembles.shape[1])])
-	print inp.shape
-# def ensemble_
 
 pred_ensembles = np.load('data/npy/pred_all.npy').astype(np.float64)
 pred_ensembles = prep_ensembles(pred_ensembles)
@@ -59,11 +54,10 @@ target = np.load('data/npy/target.npy')
 
 get_model_stats(pred_ensembles,target)
 
+print 'Mean ensembles'
 output = ensemble_mean(pred_ensembles)
 get_stats(output,target)
 
-# ensemble_mean(pred_ensembles)
-# output = ensemble_majority_voting(pred_ensembles)
-# get_stats(output,target)
-
-# stacking(pred_ensembles,target)
+print 'Majority Voting'
+output = ensemble_majority_voting(pred_ensembles)
+get_stats(output,target)
